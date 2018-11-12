@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../wait/jquery-3.3.1.min.js"></script>
+    <script src="../wait/jquery-2.1.1.min.js"></script>
+    <script src="../wait/jquery-3.3.1.js"></script>
+    <script src="../wait/jquery-ui.js"></script>
+    <style>
+        body{
+            width: 100%;
+            height: 100%;
+            /*background-image: url("../tank_2.jpg");*/
+            /*background-image: url("../image/tank01.jpeg");*/
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+
+        }
+        html{
+            width: 100%;
+            height: 100%;
+        }
+        /*加载蒙版css*/
+        .loading{
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            background-color: #E2F6FB;
+            top: 0px;
+            left: 0px;
+            z-index: 1;
+        }
+        /*等待进度小css*/
+        .loading .samllpic{
+            width: 100%;
+            height: 20%;
+            background-image: url("../wait/bigSpinner.gif");
+            background-repeat: no-repeat;
+            background-position: center;
+            position: absolute;
+            top: 0px;
+            bottom: 0px;
+            right: 0px;
+            left: 0px;
+            margin: auto;
+            align-content: center;
+        }
+        #sp{
+            width: 100%;
+            height: 20%;
+            left: 50%;
+            top: 51%;
+            position: absolute;
+            margin: auto;
+            align-content: center;
+            font-size: 80%;
+            color: #307fd2;
+        }
+
+    </style>
+</head>
+
+<body>
+<div class="board">
+    <div class="loading">
+
+        <div class="samllpic">
+        </div>
+       <span id="sp">正在匹配中...</span>
+    </div>
+</div>
+</body>
+
+<script>
+    // function initPoint(data){
+    //     //发送请求获取指定分公司所有小区初始坐标点
+    //     $.ajax({
+    //         type:"POST",
+    //         url:$("#basePath").val()+"xxxxx.do",
+    //         data:data,
+    //         dataType:"json",
+    //         beforeSend:function(){
+    //             /*请求发送前向body中添加进度等待蒙版，样式同上*/
+    //             $("body").append("<div class='loading'><div class='bigpic'></div></div>");
+    //         },
+    //         success:function(data){
+    //             /*success逻辑处理*/
+    //         },
+    //         complete:function(xhr){
+    //             /*数据加载完成后，将蒙版移除*/
+    //             $(".loading").fadeOut();
+    //         }
+    //     })
+    // }
+    $(document).ready(function () {
+        var interval= setInterval(function () {
+            $.ajax({
+                type:"post",
+                url:"/start",
+                dataType:"json",
+                async:true,
+                cache:false,
+                success:function start_ass(match_over) {
+                    console.log((match_over['status']));
+                    if(match_over['status']==="1"){
+                        clearInterval(interval);
+                        $.ajax({
+                            type:"post",
+                            url:"/assemble_tank.html",
+                            dataType:"html",
+                            async:true,
+                            success:function () {
+                                // if(start_ass_msg['status']===1){
+                                    alert("开始编辑坦克");
+                                    window.location.href = "assemble_tank.html";
+                                // }
+                                // else if(start_ass_msg['status']==="0"){
+                                //     start_ass();
+                                // }
+                            }
+                        });
+                    }
+                }
+            })
+        },2000)
+    });
+</script>
+</html>

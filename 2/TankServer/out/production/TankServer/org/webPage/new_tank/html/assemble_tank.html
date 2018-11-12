@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="../assemble/jquery-3.3.1.min.js"></script>
+    <script src="../assemble/jquery-2.1.1.min.js"></script>
+    <script src="../assemble/jquery-3.3.1.js"></script>
+    <script src="../assemble/jquery-ui.js"></script>
+    <!--<script type="text/javascript" src="../js/jquery-2.2.3.min.js"></script>-->
+    <style type="text/css">
+        body{
+            width: 100%;
+            height: 100%;
+            /*background-image: url("../tank_2.jpg");*/
+            background-image: url("../assemble/tank01.jpeg");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+
+        }
+        html{
+            width: 100%;
+            height: 100%;
+        }
+        .msg_bar{
+            width: 30%;
+            height: 70%;
+        }
+        .user_info{
+            width: 13%;
+            height: 9%;
+            position: absolute;
+            left: 1%;
+            top: 1%;
+            bottom: 1%;
+            text-align: center;
+            /* @Key 透明度 R G B Alpha（不透明度为50%） */
+            background-color: rgba(39, 71, 94, 0.73);
+            /* @Key 圆角矩形 */
+            -moz-border-radius: 1em;
+            -webkit-border-radius: 1em;
+            border-radius: 1em;
+            /* @Key 投影 投影偏移3px，宽6px，颜色#666 */
+            -webkit-box-shadow: 3px 3px 50px #79a6cc;
+            -moz-box-shadow: 3px 3px 50px #79a6cc;
+            box-shadow: 3px 3px 50px #79a6cc;
+        }
+        .round_icon{
+            width: 30%;
+            height: 80%;
+            position: absolute;
+            margin-top: 3%;
+            margin-bottom: 3%;
+            margin-left: 5%;
+            display: flex;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            /* @Key 投影 投影偏移3px，宽6px，颜色#666 */
+            -webkit-box-shadow: 3px 3px 50px #79a6cc;
+            -moz-box-shadow: 3px 3px 50px #79a6cc;
+            box-shadow: 3px 3px 50px #79a6cc;
+            z-index: 50;
+        }
+        .user_name{
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            display: flex;
+            width: 80%;
+            height: 50%;
+            position: absolute;
+            margin-top: 5%;
+            margin-bottom:5%;
+            top: 0%;
+            left: 20%;
+            font-size: 80%;
+
+        }
+        .user_name {
+            font-weight:bold;
+            color:#ff9955;
+        }
+        .assembly{
+            width: 10%;
+
+            position: absolute;
+            left: 1%;
+            top: 12%;
+            bottom: 5%;
+            text-align: center;
+            /* @Key 透明度 R G B Alpha（不透明度为50%） */
+            background-color: rgba(39, 71, 94, 0.73);
+            /* @Key 圆角矩形 */
+            -moz-border-radius: 1em;
+            -webkit-border-radius: 1em;
+            border-radius: 1em;
+            /* @Key 投影 投影偏移3px，宽6px，颜色#666 */
+            -webkit-box-shadow: 3px 3px 50px #79a6cc;
+            -moz-box-shadow: 3px 3px 50px #79a6cc;
+            box-shadow: 3px 3px 50px #79a6cc;
+        }
+        .assembly_icon{
+            margin-top: 1%;
+            margin-bottom: 1%;
+            padding-top: 1%;
+            padding-bottom: 10%;
+        }
+        .assembly_icon span{
+            color: #97cfff;
+        }
+
+
+
+
+
+        .right_side_box{
+            width: 60%;
+            height: 85%;
+            position: absolute;
+            right: 0%;
+            top: 0%;
+            bottom: 5%;
+            text-align: center;
+            float: right;
+            /* @Key 透明度 R G B Alpha（不透明度为50%） */
+            /*background-color: rgba(94, 18, 31, 0.73);*/
+            /* @Key 圆角矩形 */
+            -moz-border-radius: 1em;
+            -webkit-border-radius: 1em;
+            border-radius: 1em;
+
+        }
+        #code_box{
+            width: 100%;
+            height: 90%;
+            float: top;
+            background-color: rgba(39, 71, 94, 0.73);
+            /* @Key 投影 投影偏移3px，宽6px，颜色#666 */
+            -webkit-box-shadow: 3px 3px 50px #79a6cc;
+            -moz-box-shadow: 3px 3px 50px #79a6cc;
+            box-shadow: 3px 3px 50px #79a6cc;
+        }
+        .side_button{
+            background-color: rgba(50, 89, 115, 0.73);
+            width:100%;
+            height: 7%;
+            float: bottom;
+            margin-right: 0%;
+            /*margin-top: -100%;*/
+            -webkit-border-bottom-left-radius:1em;
+            -moz-border-bottom-left-radius:1em;
+            -webkit-border-bottom-right-radius:1em;
+            -moz-border-bottom-right-radius:1em;
+
+            -webkit-box-shadow: 3px 3px 50px #79a6cc;
+            -moz-box-shadow: 3px 3px 50px #79a6cc;
+            box-shadow: 3px 3px 50px #79a6cc;
+        }
+        .down{
+            padding-left: 50%;
+            padding-right: 50%;
+            padding-top: 1%;
+            padding-bottom: 1%;
+        }
+        .hide{
+            display: none;
+        }
+        .button{
+            width: 60%;
+            height: 8%;
+            position: absolute;
+            right: 0%;
+            top: 85%;
+            bottom: 10%;
+            float: right;
+            -moz-border-radius: 1em;
+            -webkit-border-radius: 1em;
+            border-radius: 1em;
+            -webkit-box-shadow: 3px 3px 50px #79a6cc;
+            -moz-box-shadow: 3px 3px 50px #79a6cc;
+            box-shadow: 3px 3px 50px #79a6cc;
+            z-index: 0;
+        }
+        .submit_code_btn,.ready_btn{
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            outline: 0;
+            background-color:  #c9e1f7;
+            border: 0;
+            padding: 10px 15px;
+            margin: 0 auto 10px auto;
+            color: rgba(255, 247, 202, 0.73);
+            border-radius: 3px;
+            width: 200px;
+            height: 50px;
+            cursor: pointer;
+            font-size: 18px;
+            -webkit-transition-duration: 0.25s;
+            transition-duration: 0.25s;
+            background-color: rgb(219, 150, 106);
+            font-family: Rockwell,"Apple LiGothic","American Typewriter",Georgia,"Telugu MN",Trattatello;
+            -webkit-box-shadow: 3px 3px 50px #79a6cc;
+            -moz-box-shadow: 3px 3px 50px #79a6cc;
+            box-shadow: 3px 3px 50px #79a6cc;
+        }
+        .submit_code_btn{
+            position: absolute;
+            float: left;
+            top: 5%;
+            left: 5%;
+            bottom: 5%;
+        }
+        .ready_btn{
+            position: absolute;
+            float: right;
+            top: 5%;
+            right:5%;
+            bottom: 5%;
+        }
+        .submit_code_btn:hover,.ready_btn:hover{
+            background-color: rgb(184, 211, 235);
+        }
+    </style>
+    <style type="text/css">
+        #codeTextarea{color: white}
+        .textAreaWithLines{font-family: courier;border: 0px solid #2e76a2;}
+        .textAreaWithLines textarea,.textAreaWithLines div{border: 0px;line-height: 120%;font-size: 12px;}
+        .lineObj{color: #97cfff;}
+    </style>
+
+
+
+    <script type="text/javascript">
+
+
+        $(document).ready(function () {
+            $("#down").click(function () {
+                $("#code_box").slideToggle(700);
+            })
+        })
+        // bug无法改变图片
+        // $(document).ready(function () {
+        //     let a;
+        //     $("#down").click(function () {
+        //         $("#code_box").slideToggle(700);
+        //         if(a==='down'){
+        //             a='up'
+        //         }
+        //         else if (a==='up'){
+        //             a='down'
+        //         }
+        //         $("#down").attr("src","../img/"+a+".png");
+        //     });
+        //
+        // });
+        //
+
+
+        //一个元素两个不同点击事件，很智障的写法
+        // $(document).ready(function () {
+        //     $("#down").click(function () {
+        //         $("#code_box").slideDown(700);
+        //         $("#down").attr("src","../img/up.png");
+        //     });
+        //
+        // });
+        // $("#down").click(function () {
+        //     $("#code_box").slideUp(700);
+        //     $("#down").attr("src","../img/down.png");
+        // });
+    </script>
+    <script type="text/javascript">
+        var lineObjOffsetTop = 2;
+        function createTextAreaWithLines(id)
+        {
+            var el = document.createElement('DIV');
+            var ta = document.getElementById(id);
+            ta.parentNode.insertBefore(el,ta);
+            el.appendChild(ta);
+            el.className='textAreaWithLines';
+            el.style.width = (ta.offsetWidth + 100) + '%';
+            ta.style.position = 'absolute';
+            ta.style.left = '5%';
+            el.style.height = (ta.offsetHeight + 100) + '%';
+            el.style.overflow='hidden';
+            el.style.position = 'relative';
+            el.style.width = (ta.offsetWidth + 100) + '5';
+            var lineObj = document.createElement('DIV');
+            lineObj.style.position = 'absolute';
+            lineObj.style.top = lineObjOffsetTop + '%';
+            lineObj.style.left = '0px';
+            lineObj.style.width = '5%';
+            el.insertBefore(lineObj,ta);
+            lineObj.style.textAlign = 'right';
+            lineObj.className='lineObj';
+            var string = '';
+            for(var no=1;no<10000;no++){
+                if(string.length>0)string = string + '<br>';
+                string = string + no;
+            }
+            ta.onkeydown = function() { positionLineObj(lineObj,ta); };
+            ta.onmousedown = function() { positionLineObj(lineObj,ta); };
+            ta.onscroll = function() { positionLineObj(lineObj,ta); };
+            ta.onblur = function() { positionLineObj(lineObj,ta); };
+            ta.onfocus = function() { positionLineObj(lineObj,ta); };
+            ta.onmouseover = function() { positionLineObj(lineObj,ta); };
+            lineObj.innerHTML = string;
+        }
+        function positionLineObj(obj,ta)
+        {
+            obj.style.top = (ta.scrollTop * -1 + lineObjOffsetTop) + 'px';
+        }
+    </script>
+
+</head>
+<body>
+<div>
+    <!--左边的用户信息&坦克部件-->
+    <div class="msg_bar">
+        <!--头像&用户名-->
+        <div class="user_info">
+            <div class="head_image">
+                <img class="round_icon" src="../assemble/head_image_boy.jpeg" width="60px" height="60px" >
+            </div>
+            <div class="user_name" id="user_name">
+                <span class="user_name_font" id="username">Username</span>
+            </div>
+        </div>
+
+        <div class="assembly">
+            <div class="assembly_icon">
+                <div class="tank_as">
+                    <img src="../assemble/tank_pedrail.png"
+                              width="80%"
+                              height="100%"
+
+                              onclick="changeType(this.id)"
+                              id="pedrail">
+                </div>
+                <span>履带</span>
+            </div>
+            <div class="assembly_icon">
+                <div class="tank_as">
+                    <img src="../assemble/tank_body.png"
+                             width="80%"
+                             height=100%"
+                             style="margin: 2%;"
+                             onclick="changeType(this.id)"
+                             id="tank_body">
+                </div>
+                <span>车体</span>
+            </div>
+            <div class="assembly_icon">
+                <div class="tank_as">
+                    <img src="../assemble/tank_aim.png"
+                             width="80%"
+                             height="100%"
+                             style="margin: 4px;"
+                             onclick="changeType(this.id)"
+                             id="tank_aim">
+                </div>
+                <span>瞄准</span>
+            </div>
+            <div class="assembly_icon">
+                <div class="tank_as">
+                    <img src="../assemble/tank_turret.png"
+                             width="80%"
+                             height="100%"
+                             style="margin: 4px;"
+                             onclick="changeType(this.id)"
+                             id="turret">
+                </div>
+                <span>炮塔</span>
+            </div>
+            <div class="assembly_icon">
+                <div class="tank_as">
+                    <img src="../assemble/tank_weapon.png"
+                             width="80%"
+                             height="100%"
+                             style="margin: 4px;"
+                             onclick="changeType(this.id)"
+                             id="weapon">
+                </div>
+                <span>武器</span>
+            </div>
+        </div>
+
+        <div class="select_tank_pedrail">
+
+        </div>
+    </div>
+    <!--右边的代码区-->
+    <div class="right_side_box">
+        <div id="code_box" class="hide">
+            <!--<form >-->
+                <!--<textarea id="codeTextarea" >22222222</textarea>-->
+            <!--</form>-->
+
+            <textarea id="codeTextarea" style="background: transparent;border-style: none;width: 100%;height: 100%">
+
+
+
+                <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+                 ╭　╭─╮　╭┬╭──╮　╮╭──╮╭──├─╮
+                 │╭───╮╭├│　　│╭├│　　│╭──┴─╮
+                 ╰├───╯╭┤╰──╯　│├──┤│　　　　│
+                 ││╭┬┬╮│├╭─┬╮　││　　│╰─┬─┬╯
+                 ╰│├├├┤││　─├　　│╰──╯　　│　│　
+                 ╰╯╯╯╯╯╰╰╰─┴╯╰┴╰──╯╰─╯　╰╯
+                >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+                **************编辑坦克**************
+
+
+                ***************坦克路径*************
+
+
+
+
+                function path(path_choose) {
+                    var p_choose=path_choose;
+                    switch (p_choose){
+                        case 0:
+                           var round=1;
+                           if (round>0){
+                               tank.angle+=8;
+                               currentSpeed = 300;
+                           }
+                           break;
+                        case 1:
+                           var round=1;
+                           if (round>0){
+                               tank.angle+=4;
+                               currentSpeed = 300;
+                           }
+                           break;
+                        case 2:
+                           var round=1;
+                           if (round>0){
+                               tank.angle-=1;
+                               currentSpeed = 300;
+                           }
+                           break;
+                        case 3:
+                           var round=1;
+                           if (round>0){
+                               tank.angle-=0.3;
+                               currentSpeed = 300;
+                           }
+                           break;
+                        //case 4:
+                           var round=1;
+                           if (round>0){
+                           //修改
+                           //tank.angle+=(度数);
+                           //currentSpeed = (速度);
+                           //tank.angle+=8;
+                           //currentSpeed = 300;
+                           //}
+                           //break;
+
+                    }
+                }
+
+
+
+
+                ***************开火******************
+
+                     var fire_choose=0;
+                     function fire(fire_choose) {
+                         var a=fire_choose;
+                         if (tank.alive === true) {
+                           if (game.time.now > nextFire && bullets.countDead() > 0) {
+                                  nextFire = game.time.now + fireRate;
+
+                                  var bullet = bullets.getFirstExists(false);
+
+                                  bullet.reset(turret.x, turret.y);
+                             switch (a) {
+
+                                case 0:
+                                    //炮筒朝敌方坦克射击
+                                    bullet.rotation = game.physics.arcade.moveToObject(bullet,EnemyTank.tank, 1000);
+                                    turret.rotation= this.game.physics.arcade.angleBetween(tank, EnemyTank.tank);
+                                   break;
+                                     // 一直超中间打
+                                case 1:
+                                    bullet.rotation=game.physics.arcade.moveToXY(bullet,400,300,1000);
+                                    turret.rotation= this.game.physics.arcade.angleToXY(turret, 400,300);
+                                   break;
+                                //case 2:
+                                    //自定义坦克炮筒朝向
+                                    //修改x,y值
+                                    //bullet.rotation=game.physics.arcade.moveToXY(bullet,x,y,1000);
+                                    //turret.rotation= this.game.physics.arcade.angleToXY(turret, x,y);
+                             }
+                           }
+                         }
+                     }
+
+
+                 *************************************
+            </textarea>
+
+        </div>
+        <div class="side_button" id="side_button">
+            <!--<p style="color: white" id="down">下拉</p>-->
+            <!--<p style="color: white" id="up" class="hide">上拉</p>-->
+            <img src="../assemble/down.png" class="down" id="down" height="40" width="40">
+            <!--<img src="../img/up.png" class="hide" id="up" height="20px" width="20px" >-->
+        </div>
+    </div>
+
+    <!--按钮区-->
+    <div class="button">
+        <div class="code_btn">
+            <button type="submit" id="submit_code_btn" class="submit_code_btn" >提交代码</button>
+        </div>
+        <div class="ready">
+            <button type="submit" id="ready_btn" class="ready_btn" onclick="window.open('battle_platform.html')">开始比赛</button>
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    createTextAreaWithLines('codeTextarea');
+</script>
+
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            type:"post",
+            url: "/hall/msg",             //规定把请求发送到哪个 URL。
+            dataType: "json",
+            async: true,
+            success:function (username) {
+                var user=username['uname'];
+                $("#username").html(user)
+            }
+        });
+
+        $("#submit_code_btn").click(function pull_code() {
+            var code=$("#codeTextarea").val();
+            $.ajax({
+                type: "post",        // 通过 POST 读取的页面不被缓存
+                url: "/code",             //规定把请求发送到哪个 URL。
+                dataType: "json",
+                data:{
+                    'code':code
+                },
+                async:true,
+                success:function (code_msg) {
+                    if(code_msg['status']==="1"){
+                        alert("代码上传成功")
+                    }
+                }
+            })
+        });
+
+
+        $("#ready_btn").click(function turn_battle() {
+
+            $.ajax({
+                type:"post",
+                url:"/battle_start",
+                dataType:"json",
+                async:true,
+                cache:false,
+                success:function start_battle(enter_a) {
+                    // console.log((enter_a['status']));
+                    if(enter_a['status']==="1"){
+                        var interval_b=setInterval(function () {
+                            $.ajax({
+                                type:"post",
+                                url:"/start_2",
+                                dataType:"json",
+                                async:true,
+                                success:function (enter_b) {
+                                    if(enter_b['start']==="1"){
+                                        clearInterval(interval_b);
+                                        $.ajax({
+                                            type:"post",
+                                            url:"/battle_platform.html",
+                                            dataType:"html",
+                                            async:true,
+                                            success:function () {
+                                                alert("开始游戏");
+                                                // window.location.href = "battle_platform.html";
+                                            }
+                                        })
+
+                                    }
+                                }
+                            });
+                        },2000)
+
+                    }else {
+                        turn_battle();
+                    }
+                }
+            })
+        })
+
+
+    })
+
+
+
+</script>
+</body>
+</html>

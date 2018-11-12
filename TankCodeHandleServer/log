@@ -1,0 +1,99 @@
+1.usercodes
+    1.1 StartServer.py  服务器
+    1.2 TankTemplate.py     里边有一个方法 playing中玩家会传自己看到的消息，
+    通过这个类调用该玩家的写的攻击策略（前端传的python文件）
+    1.xx  其他文件都是玩家上传的文件（前端传的python文件）。
+        上传文件时要注意： a. python文件名和所调用的方法要在1.2中的clsname method1 一致。
+
+2.apiTankcode 自己写的API
+
+
+目前项目该如何写呢：
+
+需求：
+1.tank对战时 需要将双方的信息进行整合到日志信息中在服务端可以及时的看到玩家游戏的状态信息。
+    共享数据tank双方如何进行整理，也就是将对战双方的tank数据进行输出或将写成logger。(在netty服务器中展现)
+        使用redis进行处理tankmap及tank对战信息。
+2.tank的前端的数据分为：
+    基本数据：玩家的基本信息 username grade
+    tankinfo HP direction 扫描范围 发射 tank状态。
+
+    每次执行攻击策略之后都会刷新用户的信息，该信息在哪里写？如何写。
+        需要在netty段进行即使的读取算好的数据。在redis中读取Python段计算出的数据。
+
+
+
+3.用户的策略该如何写
+    优先级：攻击 生存
+    遇到tank 攻击
+
+
+
+
+============================================================================================================
+mytank是如何对战的
+1.扫描地图 获取多个队列
+2.通过轮训多个队列 查看自己的所处的状态。
+3.匹配状态后，会根据攻击策略进行玩家tank的数据更新。
+
+=========================地图范围的算法===================================================================================
+# scanner=1
+# wide=5
+# tempMyLocation=25
+# print("tempMyLocation:  "+str(tempMyLocation))
+# for j in range(-scanner, scanner + 1):
+#     print("==============="+str(j))
+#     for i in range(-scanner, scanner + 1):
+#         if tempMyLocation%5==0:
+#             q = tempMyLocation + wide * j + i
+#             if q <= 0 or q > 25:
+#                 continue
+#             left = (int(tempMyLocation / wide) + j-1) * wide + 1
+#             right = left + wide - 1
+#             if left <= q <= right and q != tempMyLocation:
+#                 print(str(q) + " left:" + str(left) + " right:" + str(right))
+#             # print(q)
+#         else:
+#             q = tempMyLocation + wide * j + i
+#             if q <= 0 or q > 25:
+#                 continue
+#             # print(q)
+#             left = (int(tempMyLocation / wide) + j) * wide + 1
+#             right = left + wide - 1
+#             if left <= q <= right and q != tempMyLocation:
+#                 print(str(q) + " left:" + str(left) + " right:" + str(right))
+
+
+=================Scanner===========================================================================================
+    def Scanner(self,scanner,username,roomid,redis):
+        wide=5
+        mylocaltion=redis.hget("room_id_list",username).decode("utf-8")
+        # mylocaltion=eval(mylocaltion)
+        print(type(mylocaltion))
+        loadList = []
+        mytankLocation = []
+        otherTankLocation = []
+        fortList = []
+        for j in range(-scanner,scanner+1):
+            for i in range(-scanner,scanner+1):
+                tempMyLocation=int(mylocaltion)
+                print(type(tempMyLocation))
+                q = tempMyLocation + wide * j + i
+                left = (int(tempMyLocation / wide) + j) * wide
+                right = left + wide - 1
+                if left <= q <= right and q != tempMyLocation:
+                    print(str(q) + " left:" + str(left) + " right:" + str(right))
+                    print(q)
+                    record=redis.hget(roomid,q)
+                    print("-------------------")
+                    print(type(record),record)
+                    aaa = record[0:str(record).__len__()]
+                    recordDict=eval(aaa)
+                    print(recordDict['player'])#获取是否有player 0=>null 1=>player1 2=>player2   {'player':'1','result':'3'}(player,T/F)  3=>winner 4=>loser
+
+                    result=self.__toList__(recordDict,loadList,mytankLocation,otherTankLocation,fortList)
+                    loadList=result['loadList']
+                    tankList=result['otherTankLocation']
+                    fortList=result['fortList']
+                    tempMyLocation=result['mytankLocation']
+        return (loadList,tankList,fortList,tempMyLocation)

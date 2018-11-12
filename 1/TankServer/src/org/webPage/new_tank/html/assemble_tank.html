@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/jquery-2.1.1.min.js"></script>
+    <script src="../js/jquery-3.3.1.js"></script>
+    <script src="../js/jquery-ui.js"></script>
+    <script type="text/javascript" src="../js/jquery-2.2.3.min.js"></script>
+    <style type="text/css">
+        body{
+            width: 100%;
+            height: 100%;
+            /*background-image: url("../tank_2.jpg");*/
+            background-image: url("../image/tank01.jpeg");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+
+        }
+        html{
+            width: 100%;
+            height: 100%;
+        }
+        .msg_bar{
+            width: 30%;
+            height: 70%;
+        }
+        .user_info{
+            width: 13%;
+            height: 9%;
+            position: absolute;
+            left: 1%;
+            top: 1%;
+            bottom: 1%;
+            text-align: center;
+            /* @Key 透明度 R G B Alpha（不透明度为50%） */
+            background-color: rgba(39, 71, 94, 0.73);
+            /* @Key 圆角矩形 */
+            -moz-border-radius: 1em;
+            -webkit-border-radius: 1em;
+            border-radius: 1em;
+            /* @Key 投影 投影偏移3px，宽6px，颜色#666 */
+            -webkit-box-shadow: 3px 3px 50px #79a6cc;
+            -moz-box-shadow: 3px 3px 50px #79a6cc;
+            box-shadow: 3px 3px 50px #79a6cc;
+        }
+        .round_icon{
+            width: 30%;
+            height: 80%;
+            position: absolute;
+            margin-top: 3%;
+            margin-bottom: 3%;
+            margin-left: 5%;
+            display: flex;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            /* @Key 投影 投影偏移3px，宽6px，颜色#666 */
+            -webkit-box-shadow: 3px 3px 50px #79a6cc;
+            -moz-box-shadow: 3px 3px 50px #79a6cc;
+            box-shadow: 3px 3px 50px #79a6cc;
+            z-index: 50;
+        }
+        .user_name{
+            width: 140px;
+            height: 20px;
+            position: absolute;
+            margin-top: 5px;
+            margin-bottom:5px ;
+            top: -60px;
+            left: 40px;
+
+        }
+        .user_name {
+            font-weight:bold;
+            color:#ff9955;
+        }
+        .assembly{
+            width: 10%;
+
+            position: absolute;
+            left: 1%;
+            top: 12%;
+            bottom: 5%;
+            text-align: center;
+            /* @Key 透明度 R G B Alpha（不透明度为50%） */
+            background-color: rgba(39, 71, 94, 0.73);
+            /* @Key 圆角矩形 */
+            -moz-border-radius: 1em;
+            -webkit-border-radius: 1em;
+            border-radius: 1em;
+            /* @Key 投影 投影偏移3px，宽6px，颜色#666 */
+            -webkit-box-shadow: 3px 3px 50px #79a6cc;
+            -moz-box-shadow: 3px 3px 50px #79a6cc;
+            box-shadow: 3px 3px 50px #79a6cc;
+        }
+        .assembly_icon{
+            margin-top: 1%;
+            margin-bottom: 1%;
+            padding-top: 1%;
+            padding-bottom: 10%;
+        }
+        .assembly_icon span{
+            color: #97cfff;
+        }
+
+
+
+
+
+        .right_side_box{
+            width: 60%;
+            height: 85%;
+            position: absolute;
+            right: 0%;
+            top: 0%;
+            bottom: 5%;
+            text-align: center;
+            float: right;
+            /* @Key 透明度 R G B Alpha（不透明度为50%） */
+            background-color: rgba(94, 18, 31, 0.73);
+            /* @Key 圆角矩形 */
+            -moz-border-radius: 1em;
+            -webkit-border-radius: 1em;
+            border-radius: 1em;
+            /*!* @Key 投影 投影偏移3px，宽6px，颜色#666 *!*/
+            /*-webkit-box-shadow: 3px 3px 50px #79a6cc;*/
+            /*-moz-box-shadow: 3px 3px 50px #79a6cc;*/
+            /*box-shadow: 3px 3px 50px #79a6cc;*/
+        }
+        #code_box{
+            width: 100%;
+            height: 90%;
+            float: top;
+            background-color: rgba(205, 106, 10, 0.73);
+        }
+        .side_button{
+            background-color: rgba(151, 205, 118, 0.73);
+            width:100%;
+            height: 10%;
+            float: bottom;
+            margin-right: 0%;
+            margin-top: -100%;
+
+        }
+        .side_button > p{
+            margin-top: 100%;
+            margin-bottom: 100%;
+            padding-top: 100%;
+            padding-bottom: 100%;
+        }
+        .hide{
+            display: none;
+        }
+
+
+
+
+
+    </style>
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#down").click(function () {
+                $("#code_box").slideDown(700);
+                $("#down").css({display: "none"});
+                $("#up").css({display: "block"});
+            });
+            $("#up").click(function () {
+                $("#code_box").slideUp(700);
+                $("#up").css({display: "none"});
+                $("#down").css({display: "block"});
+            });
+        });
+
+    </script>
+
+</head>
+<body>
+<div>
+    <div class="msg_bar">
+        <!--头像&用户名-->
+        <div class="user_info">
+            <div class="head_image">
+                <img class="round_icon" src="../img/head_image_boy.jpeg" width="60px" height="60px" >
+            </div>
+            <div class="user_name" id="user_name">
+                <span class="user_name_font" id="username">Username</span>
+            </div>
+        </div>
+
+        <div class="assembly">
+            <div class="assembly_icon">
+                <div class="tank_as">
+                    <img src=""
+                              width="80%"
+                              height="80%"
+
+                              onclick="changeType(this.id)"
+                              id="pedrail">
+                </div>
+                <span>履带</span>
+            </div>
+            <div class="assembly_icon">
+                <div class="tank_as">
+                    <img src=""
+                             width="80%"
+                             height="80%"
+                             style="margin: 2%;"
+                             onclick="changeType(this.id)"
+                             id="tank_body">
+                </div>
+                <span>车体</span>
+            </div>
+            <div class="assembly_icon">
+                <div class="tank_as">
+                    <img src=""
+                             width="80%"
+                             height="50%"
+                             style="margin: 4px;"
+                             onclick="changeType(this.id)"
+                             id="tank_aim">
+                </div>
+                <span>瞄准</span>
+            </div>
+            <div class="assembly_icon">
+                <div class="tank_as">
+                    <img src=""
+                             width="80%"
+                             height="50%"
+                             style="margin: 4px;"
+                             onclick="changeType(this.id)"
+                             id="turret">
+                </div>
+                <span>炮塔</span>
+            </div>
+            <div class="assembly_icon">
+                <div class="tank_as">
+                    <img src=""
+                             width="80%"
+                             height="50%"
+                             style="margin: 4px;"
+                             onclick="changeType(this.id)"
+                             id="weapon">
+                </div>
+                <span>武器</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!--代码-->
+    <!--<div class="right_side_box">-->
+        <!--<div class="side_button" id="side_button">-->
+            <!--<p style="color: white" id="left"><</p>-->
+            <!--<p style="color: white" id="right" class="hide">></p>-->
+        <!--</div>-->
+        <!--<div id="code_box" class="code_box">-->
+            <!--<code style="color: #97cfff">-->
+                <!--代码区aaaaaaaa-->
+            <!--</code>-->
+        <!--</div>-->
+
+    <!--</div>-->
+
+
+
+    <div class="right_side_box">
+        <div id="code_box" class="code_box">
+            <code style="color: #97cfff">aaaaaaaa</code>
+        </div>
+        <div class="side_button" id="side_button">
+            <p style="color: white" id="down">下拉</p>
+            <p style="color: white" id="up" class="hide">上拉</p>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="code_btn">
+        <button type="submit" id="submit_code_btn" class="submit_code_btn" >提交代码</button>
+    </div>
+
+    <div class="ready">
+        <button type="submit" id="ready_btn" class="ready_btn" onclick="window.open('battle_platform.html')">Choose Room</button>
+    </div>
+</div>
+
+</body>
+</html>
